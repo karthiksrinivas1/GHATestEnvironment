@@ -1,0 +1,34 @@
+name: GP-Build-Test
+
+on:
+  workflow_dispatch
+
+
+jobs:
+  approval-stage-nonprod:
+    name: approval
+    needs: build-push-gp-nonprod
+    runs-on: ubuntu-latest
+    environment:
+      name: gp-nonprod-test-demo-protected
+    steps:
+      - name: Approval Step
+        run: echo "Requesting approval to start sequential deployment."
+
+  demo-sample-matrix:
+    name: demorun
+    needs: approval-stage-nonprod
+    runs-on: ubuntu-latest
+    environment:
+      name: gp-nonprod-test-demo
+    strategy:
+      max-parallel: 1
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node-version: [14, 16, 18]
+
+    steps:
+      - name: Print Matrix Values
+        run: |
+          echo "Operating System: ${{ matrix.os }}"
+          echo "Node Version: ${{ matrix.node-version }}" 
