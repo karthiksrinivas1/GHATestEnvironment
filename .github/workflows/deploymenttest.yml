@@ -10,10 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: gp-nonprod-test-demo-protected
-    steps:
-      - name: Approval Step
-        run: echo "Requesting approval to start sequential deployment."
-
   demo-sample-matrix:
     name: demorun
     needs: approval-stage-nonprod
