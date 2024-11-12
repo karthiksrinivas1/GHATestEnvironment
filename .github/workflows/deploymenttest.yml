@@ -7,7 +7,6 @@ on:
 jobs:
   approval-stage-nonprod:
     name: approval
-    needs: build-push-gp-nonprod
     runs-on: ubuntu-latest
     environment:
       name: gp-nonprod-test-demo-protected
